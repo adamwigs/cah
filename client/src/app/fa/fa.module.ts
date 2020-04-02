@@ -7,12 +7,14 @@ import {
   faCrown,
   faUser,
   faCheck,
+  faCheckCircle,
   faFlagCheckered,
   faGavel,
   faClone,
   faCog,
   faDatabase,
-  faSync
+  faSync,
+  faArrowRight
 } from '@fortawesome/free-solid-svg-icons';
 
 import {
@@ -32,6 +34,7 @@ export class FAModule {
       faCrown,
       faUser,
       faCheck,
+      faCheckCircle,
       faFlagCheckered,
       faGavel,
       faClone,
@@ -41,7 +44,8 @@ export class FAModule {
       faDatabase,
       faAngular,
       faNodeJs,
-      faSync
+      faSync,
+      faArrowRight
     );
   }
 }

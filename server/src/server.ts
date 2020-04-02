@@ -45,9 +45,10 @@ io.on('connection', socket => {
 
     socket.on('username', (data: Socket.UsernameUpdate) => {
 
-        const { pid, username } = data;
+        const { pid, username, emoji } = data;
         if (players[pid]) {
             players[pid].username = username;
+            players[pid].emoji = emoji;
         }
         // console.log(`Player ${pid} changed username to ${username ? username : '<none>'}.`);
 

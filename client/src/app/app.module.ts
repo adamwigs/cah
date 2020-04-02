@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { ContenteditableModule } from '@ng-stack/contenteditable';
 
 // Routing
 import { AppRoutingModule } from './app-routing.module';
@@ -23,6 +24,7 @@ import { ToastService } from '@service/toast.service';
 // Modules
 import { ClipboardModule } from 'ngx-clipboard';
 import { FAModule } from './fa/fa.module';
+import { PickerModule } from '@ctrl/ngx-emoji-mart';
 
 // Other imports
 import { SocketIoModule } from 'ngx-socket-io';
@@ -46,9 +48,11 @@ import { BlankCardModalComponent } from './blank-card-modal/blank-card-modal.com
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    ContenteditableModule,
     SocketIoModule.forRoot(env.sioc),
     ClipboardModule,
-    FAModule
+    FAModule,
+    PickerModule
   ],
   providers: [
     SocketService,

@@ -31,7 +31,7 @@ export class CreateGameComponent implements OnInit, DoCheck {
   black = 0;
   white = 0;
   packs: Pack[] = [];
-  newGame = new NewGame(this._tokenService.get(), (Math.random() * 1E17).toString(36), 8, 5, 0, [], '', 5);
+  newGame = new NewGame(this._tokenService.get(), (Math.random() * 1E17).toString(36), 8, 10, 0, [], '', 5);
 
   constructor(
     private _socket: Socket,
@@ -51,6 +51,10 @@ export class CreateGameComponent implements OnInit, DoCheck {
           white: d.white,
           selected: false,
           hidden: false
+        });
+
+        this.packs.forEach(p => {
+          p.selected = p.name.startsWith("CAH") && !p.name.includes("UK") && !p.name.includes("Mars") && !p.name.includes("Red") && !p.name.includes("Blue");
         });
       }
     });

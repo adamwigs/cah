@@ -1,17 +1,38 @@
 <main>
 
-  <form #joinGameForm="ngForm" autocomplete="off">
+  <form #joinGameForm="ngForm" autocomplete="off" class="hero">
 
-    <div class="fw">
-      <input (keyup)="setUsername()" name="username" [(ngModel)]="username" type="text" pattern="^(?=.*\S).+$"
-        placeholder="Username" maxlength="25" minlength="1" autocomplete="off" />
+    <!-- <emoji-mart set="emojione"></emoji-mart>
+    <emoji-mart (emojiClick)="addEmoji($event)"></emoji-mart>
+    <emoji-mart
+      [style]="{ position: 'absolute', bottom: '20px', right: '20px' }"
+    ></emoji-mart> -->
+
+    <p>
+      Hello. My name is <span class="username" contenteditable="true" name="username" (keyup)="setUsername()" [class.empty]="username.length == 0" [(ngModel)]="username"></span> and my favorite emoji is <span class="emoji-container"><span class="emoji" (click)="toggleEmojiPicker()">{{ currentEmoji }}</span>.<emoji-mart 
+      *ngIf="isEmojiPickerVisible"
+      [style]="{ position: 'absolute', bottom: '0px', right: '0px' }"
+      title="" emoji="point_up" darkMode="true"
+      (emojiClick)="setEmoji($event)"
+    ></emoji-mart></span> I want to <span class="underline">&nbsp;</span>.
+    </p>
+
+    <!-- <div class="fw">
+      <div class="emoji"><span class="emoji-container" (click)="toggleEmojiPicker()">{{ currentEmoji }}</span><emoji-mart 
+        *ngIf="isEmojiPickerVisible"
+        [style]="{ position: 'absolute', top: '0px', left: '90px' }"
+        title="" emoji="point_up" darkMode="true"
+        (emojiClick)="setEmoji($event)"
+      ></emoji-mart></div>
+      <div class="identity"><input (keyup)="setUsername()" name="username" [(ngModel)]="username" type="text" pattern="^(?=.*\S).+$"
+        placeholder="Username" maxlength="25" minlength="1" autocomplete="off" /></div>
     </div>
 
     <div class="fw">
       <small [hidden]="username && joinGameForm.valid">A username is required to create and join games.</small>
-    </div>
+    </div> -->
 
-    <div class="left">
+    <!-- <div class="left">
       <input [(ngModel)]="joinGame.gid" type="text" name="game-id" id="game-id" placeholder="Game ID"
         maxlength="20" autocomplete="off" />
       <button *ngIf="!pathIsJoin" [disabled]="!username || joinGameForm.invalid" class="create" routerLink="/create">Create game</button>
@@ -23,19 +44,25 @@
       <button *ngIf="!pathIsJoin" [disabled]="!username || joinGameForm.invalid || !joinGame.gid" (click)="join()" class="join">
         Join game
       </button>
-    </div>
-
-    <div *ngIf="pathIsJoin" class="fw">
-      <button [disabled]="!username || joinGameForm.invalid || !joinGame.gid" (click)="join()" class="join">
-        Join game
-      </button>
-    </div>
+    </div> -->
 
   </form>
 
+  <div class="btn-container">
+    <button *ngIf="pathIsJoin" [disabled]="!username || joinGameForm.invalid || !joinGame.gid" (click)="join()" class="join">
+      <div class="notice">A username is required to create and join games.</div>
+      Let's get started <fa-icon class="continue" [icon]="['fas', 'arrow-right']" size="sm"></fa-icon>
+    </button>
+
+    <button *ngIf="!pathIsJoin" [disabled]="!username || joinGameForm.invalid" class="create" routerLink="/create">
+      <div class="notice">A username is required to create and join games.</div>
+      Let's get started <fa-icon class="continue" [icon]="['fas', 'arrow-right']" size="sm"></fa-icon>
+    </button>
+  </div>
+
 </main>
 
-<footer>
+<!-- <footer>
   <a routerLink="/info">Info</a> - Copyright olback
   <a href="https://github.com/olback/cah" target="_blank" rel="noopener">
     <fa-icon [icon]="['fab', 'github']"></fa-icon>
@@ -43,4 +70,4 @@
   <a href="https://twitter.com/mrolback" target="_blank" rel="noopener">
     <fa-icon [icon]="['fab', 'twitter']"></fa-icon>
   </a>
-</footer>
+</footer> -->

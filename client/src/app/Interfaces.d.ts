@@ -31,6 +31,7 @@ declare namespace ISocket {
 
         interface Player {
             username: string;
+            emoji: string;
             id: string;
             done: boolean;
             host: boolean;

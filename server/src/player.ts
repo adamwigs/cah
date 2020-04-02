@@ -7,6 +7,7 @@ interface Players {
 class Player {
 
     public username = '';
+    public emoji = '';
     public inGame = false;
     public score = 0;
     public blanksPlayed = 0;

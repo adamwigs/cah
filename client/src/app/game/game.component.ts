@@ -48,7 +48,10 @@ export class GameComponent implements OnInit, OnDestroy {
         this.message = 'Waiting for players';
         this.done = true;
       } else if (game.czar === this._token.get()) {
-        this.message = 'You are the card czar';
+        // It's your turn to use your divine judgement.
+        // It's about time you start picking favorites.
+        // Wave emoji. Stop looking at your phone and choose.
+        this.message = 'You are the card czar. Don\'t fuck this up.';
       } else {
         this.message = '';
         this.done = false;

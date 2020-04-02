@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Socket } from 'ngx-socket-io';
 import { TokenService } from '@service/token.service';
 import { JoinGame } from '@class/join-game';
+import { EmojiEvent } from '@ctrl/ngx-emoji-mart/ngx-emoji/public_api';
 
 @Component({
   selector: 'app-main',
@@ -13,6 +14,10 @@ import { JoinGame } from '@class/join-game';
 export class MainComponent implements OnInit {
 
   username: string;
+  currentEmoji: string;
+
+  isEmojiPickerVisible = false;
+
   joinGame = new JoinGame(this._token.get(), '', '');
   pathIsJoin = false;
 
@@ -26,6 +31,7 @@ export class MainComponent implements OnInit {
   ngOnInit() {
 
     this.username = this._usernameService.get();
+    this.currentEmoji = this._usernameService.getEmoji();
 
     if (this._route.routeConfig && this._route.routeConfig.path === 'join/:id') {
       this.pathIsJoin = true;
@@ -34,6 +40,20 @@ export class MainComponent implements OnInit {
       });
     }
 
+  }
+
+  toggleEmojiPicker() {
+    if (this.isEmojiPickerVisible) {
+      this.isEmojiPickerVisible = false;
+    } else{
+      this.isEmojiPickerVisible = true;
+    }
+  }
+
+  setEmoji($event: EmojiEvent) {
+    this.currentEmoji = $event.emoji.native;
+    this.isEmojiPickerVisible = false;
+    this._usernameService.setEmoji(this.currentEmoji);
   }
 
   setUsername() {

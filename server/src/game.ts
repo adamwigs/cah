@@ -178,6 +178,7 @@ class Game {
                 pa.push({
                     id: this._players[p].id,
                     username: this._players[p].username,
+                    emoji: this._players[p].emoji,
                     done: this._players[p].picks.length === this._blackCards[this._bIndex].pick,
                     host: this._host.id === this._players[p].id,
                     score: this._players[p].score

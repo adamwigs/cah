@@ -17,7 +17,7 @@ export class UsernameService {
   set(username: string) {
 
     sessionStorage.setItem('username', username);
-    this._socketService.setUsername(username);
+    this._socketService.setUserIdentity(username, this.getEmoji());
 
     // Easter eggs
     if (username.toLowerCase() === 'comic sans') {
@@ -35,6 +35,15 @@ export class UsernameService {
 
     return sessionStorage.getItem('username') || '';
 
+  }
+
+  setEmoji(emoji: string) {
+    sessionStorage.setItem('emoji', emoji);
+    this._socketService.setUserIdentity(this.get(), emoji);
+  }
+
+  getEmoji() {
+    return sessionStorage.getItem('emoji') || '🤪';
   }
 
 }

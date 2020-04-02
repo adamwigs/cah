@@ -21,9 +21,9 @@ export class SocketService {
 
   }
 
-  setUsername(username: string) {
+  setUserIdentity(username: string, emoji: string) {
 
-    const user = new UpdateUsernameRequest(this._tokenService.get(), username);
+    const user = new UpdateUsernameRequest(this._tokenService.get(), username, emoji);
     this.socket.emit('username', user);
 
   }

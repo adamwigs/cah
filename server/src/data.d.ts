@@ -38,6 +38,7 @@ declare namespace Socket {
 
     interface UsernameUpdate extends Request {
         username: string;
+        emoji: string;
     }
 
     interface GameRequest extends Request {
@@ -77,6 +78,7 @@ declare namespace Socket {
 
         interface Player {
             username: string;
+            emoji: string;
             id: string;
             done: boolean;
             host: boolean;
