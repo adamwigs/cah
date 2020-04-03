@@ -101,7 +101,7 @@ class Game {
             log.error(e instanceof Error ? e.stack : e);
 
             _host.socket.emit('error-message', {
-                message: 'Server error.'
+                message: 'Error redirecting host to game.'
             });
 
         });

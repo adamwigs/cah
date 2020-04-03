@@ -5,6 +5,7 @@ import { Socket } from 'ngx-socket-io';
 import { TokenService } from '@service/token.service';
 import { JoinGame } from '@class/join-game';
 import { EmojiEvent } from '@ctrl/ngx-emoji-mart/ngx-emoji/public_api';
+import { ScrollToService, ScrollToConfigOptions } from '@nicky-lenaers/ngx-scroll-to';
 
 @Component({
   selector: 'app-main',
@@ -17,6 +18,7 @@ export class MainComponent implements OnInit {
   currentEmoji: string;
 
   isEmojiPickerVisible = false;
+  isInActionSelectionMode = false;
 
   joinGame = new JoinGame(this._token.get(), '', '');
   pathIsJoin = false;
@@ -25,7 +27,8 @@ export class MainComponent implements OnInit {
     private _route: ActivatedRoute,
     private _socket: Socket,
     private _token: TokenService,
-    private _usernameService: UsernameService
+    private _usernameService: UsernameService,
+    private _scrollToService: ScrollToService
     ) { }
 
   ngOnInit() {
@@ -62,10 +65,28 @@ export class MainComponent implements OnInit {
 
   }
 
+  getStarted() {
+    this.isInActionSelectionMode = true;
+    this.isEmojiPickerVisible = false;
+
+    // var scrollToService = this._scrollToService;
+
+    // setTimeout(function() {
+    //   const config: ScrollToConfigOptions = {
+    //     target: 'cards',
+    //     duration: 500,
+    //     easing: 'easeInOutCubic',
+    //     offset: 20
+    //   };
+    
+    //   scrollToService.scrollTo(config);
+    // }, 100);
+  }
+
   join() {
 
     this._socket.emit('join-game', this.joinGame);
-
+    
   }
 
 }

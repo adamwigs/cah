@@ -25,6 +25,7 @@ import { ToastService } from '@service/toast.service';
 import { ClipboardModule } from 'ngx-clipboard';
 import { FAModule } from './fa/fa.module';
 import { PickerModule } from '@ctrl/ngx-emoji-mart';
+import { ScrollToModule } from '@nicky-lenaers/ngx-scroll-to';
 
 // Other imports
 import { SocketIoModule } from 'ngx-socket-io';
@@ -33,6 +34,17 @@ import { InfoComponent } from './info/info.component';
 import { BlankCardModalComponent } from './blank-card-modal/blank-card-modal.component';
 
 @NgModule({
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    FormsModule,
+    ContenteditableModule,
+    SocketIoModule.forRoot(env.sioc),
+    ClipboardModule,
+    FAModule,
+    PickerModule,
+    ScrollToModule.forRoot()
+  ],
   declarations: [
     AppComponent,
     MainComponent,
@@ -43,16 +55,6 @@ import { BlankCardModalComponent } from './blank-card-modal/blank-card-modal.com
     ToastComponent,
     InfoComponent,
     BlankCardModalComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    FormsModule,
-    ContenteditableModule,
-    SocketIoModule.forRoot(env.sioc),
-    ClipboardModule,
-    FAModule,
-    PickerModule
   ],
   providers: [
     SocketService,

@@ -1,69 +1,82 @@
 <main>
 
-  <input (keyup)="filter()" [(ngModel)]="query" type="text" class="search" placeholder="Filter..." />
+  <section *ngIf="!isGameCreated">
 
-  <ul>
-    <ng-template [ngIf]="true" *ngFor="let pack of packs">
-      <li (click)="togglePack(pack)" [class.hidden]="pack.hidden" [class.selected]="pack.selected" *ngIf="!pack.hidden">
-        {{ pack.name }} <div class="black">{{ pack.black }}</div>
-        <div class="white">{{ pack.white }}</div>
-      </li>
-    </ng-template>
-  </ul>
+    <input (keyup)="filter()" [(ngModel)]="query" type="text" class="search" placeholder="Filter..." />
 
-  <div class="cards-info">
-    <span class="cards">{{ black }}</span><span class="cards white">{{ white }}</span><button
-      (click)="toggleAll(false)">None</button><button (click)="toggleAll(true)">All</button>
-  </div>
+    <ul>
+      <ng-template [ngIf]="true" *ngFor="let pack of packs">
+        <li (click)="togglePack(pack)" [class.hidden]="pack.hidden" [class.selected]="pack.selected" *ngIf="!pack.hidden">
+          {{ pack.name }} <div class="black">{{ pack.black }}</div>
+          <div class="white">{{ pack.white }}</div>
+        </li>
+      </ng-template>
+    </ul>
 
-  <form #newGameForm="ngForm" autocomplete="off">
-
-    <div class="input-group">
-      <label for="max-players">Max Score:</label>
-      <input required #maxScore="ngModel" [(ngModel)]="newGame._maxScore" name="maxScore" id="max-score" type="number"
-      min="3" max="100" value="8" pattern="^[^0][\d]{0,2}$" autocomplete="off" />
+    <div class="cards-info">
+      <span class="cards">{{ black }}</span><span class="cards white">{{ white }}</span><button
+        (click)="toggleAll(false)">None</button><button (click)="toggleAll(true)">All</button>
     </div>
 
-    <div class="input-group">
-      <label for="max-players">Max Players:</label>
-      <input required #maxPlayers="ngModel" [(ngModel)]="newGame._maxPlayers" name="maxPlayers" id="max-players" type="number"
-      min="3" max="20" value="10" pattern="^[^0][\d]{0,1}$" autocomplete="off" />
+    <form #newGameForm="ngForm" autocomplete="off">
+
+      <div class="input-group">
+        <label for="max-players">Max Score:</label>
+        <input required #maxScore="ngModel" [(ngModel)]="newGame._maxScore" name="maxScore" id="max-score" type="number"
+        min="3" max="100" value="8" pattern="^[^0][\d]{0,2}$" autocomplete="off" />
+      </div>
+
+      <div class="input-group">
+        <label for="max-players">Max Players:</label>
+        <input required #maxPlayers="ngModel" [(ngModel)]="newGame._maxPlayers" name="maxPlayers" id="max-players" type="number"
+        min="3" max="20" value="10" pattern="^[^0][\d]{0,1}$" autocomplete="off" />
+      </div>
+
+      <div class="input-group">
+        <label for="max-players">Blank cards per player:</label>
+        <input required #blanks="ngModel" [(ngModel)]="newGame._blanks" name="blanks" id="blanks" type="number"
+        min="0" max="100" value="3" pattern="^[\d]{0,3}$" autocomplete="off" />
+      </div>
+
+      <div class="input-group" style="display:none">
+        <label for="timeout">Timeout:</label>
+        <select required #timeout="ngModel" [(ngModel)]="newGame.timeout" name="timeout" id="timeout">
+          <option default value="0">Unlimited</option>
+          <option value="60">1 Minute</option>
+          <option value="120">2 Minutes</option>
+          <option value="180">3 Minutes</option>
+          <option value="240">4 Minutes</option>
+          <option value="300">5 Minutes</option>
+        </select>
+      </div>
+
+      <!-- <div class="input-group">
+        <label for="password">Game password (optional):</label>
+        <input #password="ngModel" [(ngModel)]="newGame.password" name="password" id="password" type="text"
+        maxlength="1000" autocomplete="off" />
+      </div> -->
+
+      <div class="input-group">
+        <label for="gameId">Game ID:</label>
+        <input id="gameId" type="text" readonly value="{{ newGame.gid }}" />
+        <!-- <button (click)="copyUrl()">Copy join URL</button> -->
+      </div>
+
+    </form>
+
+    <div class="btn-container">
+      <button [disabled]="newGameForm.form.invalid" (click)="startGame()" class="start-game">Create a new game <fa-icon class="continue" [icon]="['fas', 'arrow-right']" size="sm"></fa-icon></button>
     </div>
 
-    <div class="input-group">
-      <label for="max-players">Blank cards per player:</label>
-      <input required #blanks="ngModel" [(ngModel)]="newGame._blanks" name="blanks" id="blanks" type="number"
-      min="0" max="100" value="3" pattern="^[\d]{0,3}$" autocomplete="off" />
-    </div>
+  </section>
 
-    <div class="input-group" style="display:none">
-      <label for="timeout">Timeout:</label>
-      <select required #timeout="ngModel" [(ngModel)]="newGame.timeout" name="timeout" id="timeout">
-        <option default value="0">Unlimited</option>
-        <option value="60">1 Minute</option>
-        <option value="120">2 Minutes</option>
-        <option value="180">3 Minutes</option>
-        <option value="240">4 Minutes</option>
-        <option value="300">5 Minutes</option>
-      </select>
-    </div>
-
-    <div class="input-group">
-      <label for="password">Game password (optional):</label>
-      <input #password="ngModel" [(ngModel)]="newGame.password" name="password" id="password" type="text"
-      maxlength="1000" autocomplete="off" />
-    </div>
-
-    <div class="input-group">
-      <label for="gameId">Game ID:</label>
-      <input id="gameId" type="text" readonly value="{{ newGame.gid }}" />
-      <button (click)="copyUrl()">Copy join URL</button>
-    </div>
-
-    <div class="input-group">
-      <button [disabled]="newGameForm.form.invalid" (click)="startGame()" class="start-game">Start Game</button>
-    </div>
-
-  </form>
+  <section *ngIf="isGameCreated" class="hero">
+    <p>
+      👋, {{ username }}. Don't forget to share this link otherwise you'll be pretty lonely.
+    </p>
+    <p>
+      <span class="link" (click)="copyUrl()">{{ joinGameURL }}</span>
+    </p>
+  </section>
 
 </main>

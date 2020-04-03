@@ -84,7 +84,7 @@ io.on('connection', socket => {
             log.error(e instanceof Error ? e.stack : e);
 
             socket.emit('error-message', {
-                message: 'Server error.'
+                message: 'Error getting cards from database.'
             });
 
 
@@ -114,6 +114,34 @@ io.on('connection', socket => {
     });
 
     socket.on('new-game', (data: Socket.NewGame) => {
+        if (!data.pid) {
+            socket.emit('error-message', {
+                message: 'No player found to create game.'
+            });
+            return;
+        }
+
+        if (!data.gid) {
+            socket.emit('error-message', {
+                message: 'No game identifier found.'
+            });
+            return;
+        }
+
+        if (!players[data.pid]) {
+            socket.emit('error-message', {
+                message: 'Player is not known in global list of players.'
+            });
+            return;
+        }
+
+        if (players[data.pid].inGame) {
+            socket.emit('error-message', {
+                message: 'Player is already joined in another game.'
+            });
+            return;
+        }
+
         if (data.pid && data.gid && players[data.pid] && !players[data.pid].inGame) {
             games[data.gid] = new Game(
                 data.gid,
@@ -133,6 +161,34 @@ io.on('connection', socket => {
     });
 
     socket.on('join-game', (data: Socket.JoinGameRequest) => {
+        if (!games[data.gid]) {
+            socket.emit('error-message', {
+                message: 'Game with identifier not found.'
+            });
+            return;
+        }
+
+        if (!players[data.pid]) {
+            socket.emit('error-message', {
+                message: 'Player not found to join game.'
+            });
+            return;
+        }
+
+        if (players[data.pid].inGame) {
+            socket.emit('error-message', {
+                message: 'Player is already joined in this game.'
+            });
+            return;
+        }
+
+        if (games[data.gid].players.amount() >= games[data.gid].maxPlayers) {
+            socket.emit('error-message', {
+                message: 'Game is already at the max players.'
+            });
+            return;
+        }
+
         if (games[data.gid] && players[data.pid] && !players[data.pid].inGame && games[data.gid].players.amount() < games[data.gid].maxPlayers) {
             if (games[data.gid].password.check(data.password) && players[data.pid].username) {
                 games[data.gid].players.add(players[data.pid]);

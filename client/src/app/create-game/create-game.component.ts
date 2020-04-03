@@ -33,6 +33,11 @@ export class CreateGameComponent implements OnInit, DoCheck {
   packs: Pack[] = [];
   newGame = new NewGame(this._tokenService.get(), (Math.random() * 1E17).toString(36), 8, 10, 0, [], '', 5);
 
+  username: string;
+  joinGameURL: string;
+  isGameCreated = false;
+  isJoinGameURLCopied = false;
+
   constructor(
     private _socket: Socket,
     private _tokenService: TokenService,
@@ -63,6 +68,8 @@ export class CreateGameComponent implements OnInit, DoCheck {
 
   ngOnInit() {
     if (this._usernameService.get()) {
+      this.username = this._usernameService.get();
+      this.joinGameURL = `${origin.toString()}/join/${this.newGame.gid}`;
       this._socket.emit('get-packs-list');
     } else {
       this._router.navigate(['/']);
@@ -127,6 +134,10 @@ export class CreateGameComponent implements OnInit, DoCheck {
   }
 
   startGame() {
+    this.isGameCreated = true;
+  }
+
+  reallyStartGame() {
 
     if (this.newGame.maxScore * this.newGame.maxPlayers >= this.black) {
       this._toastService.emit(new Toast(`Not enough black cards selected. ${this.newGame.maxScore * this.newGame.maxPlayers} required for this configuration.`));
@@ -140,6 +151,7 @@ export class CreateGameComponent implements OnInit, DoCheck {
   }
 
   copyUrl() {
+    this.isJoinGameURLCopied = true;
 
     const url = `${origin.toString()}/join/${this.newGame.gid}`;
 

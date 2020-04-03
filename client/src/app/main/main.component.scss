@@ -4,6 +4,11 @@ main {
   margin-top: 35vh;
   text-align: center;
   width: fit-content;
+  transition: margin-top 0.65s ease-in-out;
+
+  &.step2 {
+    margin-top: calc(35vh - 200px);
+  }
 
   .hero {
     width: calc(100vw - 100px);
@@ -13,6 +18,10 @@ main {
       text-align: left;
       font-size: 72px;
       font-weight: 600;
+
+      span {
+        transition: opacity .35s ease-in-out;
+      }
 
       .username {
         display: inline;
@@ -65,7 +74,53 @@ main {
         border-bottom: 6px solid #fff;
         display: inline-block;
       }
+
+      .dimmed {
+        opacity: 25%;
+      }
     }
+
+    .cards {
+      width: auto;
+      height: 215px;
+      display: block;
+      margin-bottom: 25vh;
+
+      .card {
+        // font-family: sans-serif;
+        padding: 12px;
+        border-radius: 6px;
+        width: 147px;
+        height: 215px;
+        font-size: 13.5pt;
+        font-weight: bold;
+        background-color: white;
+        color: black;
+        background: linear-gradient(150deg, rgba(255,255,255,1) 0%, rgba(225,225,225,1) 100%);
+        border: 1px solid black;
+        margin-right: 1px;
+        display: block;
+        float: left;
+        white-space: initial;
+        position: relative;
+        text-align: left;
+
+        &:focus{
+          outline: none;
+        }
+
+        &:not(.black) {
+          cursor: pointer;
+          transition: background-color 0.1s ease-in-out, transform 0.2s ease-in-out;
+        }
+
+        &:not(.black):hover, &.selected {
+          transform: translateY(-10px);
+          background: linear-gradient(150deg, rgba(255,255,255,1) 0%, rgba(205,205,205,1) 100%);
+        }
+      }
+    }
+
   }
 
   div.fw {
