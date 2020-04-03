@@ -21,7 +21,7 @@ const server = app.listen(port, () => {
 });
 
 const io = socketio(server, {
-    origins: env.NODE_ENV === 'production' ? ['cah.ninja:443'] : ['*:*']
+    origins: env.NODE_ENV === 'production' ? ['cah.raw.dev:*'] : ['*:*']
 });
 
 const games: Games = {};
