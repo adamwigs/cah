@@ -23,7 +23,7 @@ export class NewGame implements GameRequest {
     }
 
     set _maxPlayers(v: number) {
-        this.sanitize('maxPlayers', 10, 3, v);
+        this.sanitize('maxPlayers', 20, 3, v);
     }
 
     get _maxPlayers() {

@@ -3,15 +3,31 @@ main {
   padding: 10px;
   margin: auto;
 
-  .hero {
+  section {
     width: calc(100vw - 100px);
     max-width: 700px;
+    margin-bottom: 35vh;
 
     p {
       text-align: left;
       font-size: 72px;
       font-weight: 600;
       line-break: normal;
+    }
+
+    .sm {
+      font-size: 36px;
+
+      input {
+        font-size: 36px;
+        background-color: black;
+        color: white;
+        font-weight: 600;
+        border: 0;
+        border-bottom: 3px solid #fff;
+        outline: none;
+        width: 70px;
+      }
     }
 
     .link {
@@ -115,14 +131,18 @@ main {
     display: block;
     margin: auto;
     padding: 0;
-    border: 1px solid #000;
-    border-bottom: none;
+    border: none;
+    border-bottom: 3px solid #fff;
     outline: none;
     padding: 1em;
+    padding-left: 0;
+    padding-right: 0;
     font-size: 16pt;
-    width: calc(100% - 2em - 2px);
-    background-color: #efefef;
-    color: #000;
+    width: calc(100% - 2px);
+    background-color: black;
+    color: #fff;
+    font-weight: 600;
+    margin-bottom: 10px;
 
     &::placeholder {
       transition: color .15s ease-in-out;
@@ -146,7 +166,7 @@ main {
     width: calc(100% - 2px);
     margin: auto;
     border: 1px solid #000;
-    max-height: 20vh;
+    max-height: 200px;
     overflow-y: auto;
 
     li {
@@ -239,7 +259,7 @@ main {
   }
 
   .btn-container {
-    position: absolute;
+    position: fixed;
     bottom: 0;
     left: 0;
     right: 0;

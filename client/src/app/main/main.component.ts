@@ -5,7 +5,6 @@ import { Socket } from 'ngx-socket-io';
 import { TokenService } from '@service/token.service';
 import { JoinGame } from '@class/join-game';
 import { EmojiEvent } from '@ctrl/ngx-emoji-mart/ngx-emoji/public_api';
-import { ScrollToService, ScrollToConfigOptions } from '@nicky-lenaers/ngx-scroll-to';
 
 @Component({
   selector: 'app-main',
@@ -27,8 +26,7 @@ export class MainComponent implements OnInit {
     private _route: ActivatedRoute,
     private _socket: Socket,
     private _token: TokenService,
-    private _usernameService: UsernameService,
-    private _scrollToService: ScrollToService
+    private _usernameService: UsernameService
     ) { }
 
   ngOnInit() {

@@ -1,6 +1,6 @@
 <main>
 
-  <section *ngIf="!isGameCreated">
+  <section *ngIf="isGameCreated">
 
     <input (keyup)="filter()" [(ngModel)]="query" type="text" class="search" placeholder="Filter..." />
 
@@ -70,13 +70,50 @@
 
   </section>
 
-  <section *ngIf="isGameCreated" class="hero">
-    <p>
-      👋, {{ username }}. Don't forget to share this link otherwise you'll be pretty lonely.
-    </p>
-    <p>
-      <span class="link" (click)="copyUrl()">{{ joinGameURL }}</span>
-    </p>
-  </section>
+    <section>
+      <p>
+        Pick some card packs that might make you laugh.
+      </p>
+      <div>
+        <input (keyup)="filter()" [(ngModel)]="query" type="text" class="search" placeholder="Filter..." />
+
+        <ul>
+          <ng-template [ngIf]="true" *ngFor="let pack of packs">
+            <li (click)="togglePack(pack)" [class.hidden]="pack.hidden" [class.selected]="pack.selected" *ngIf="!pack.hidden">
+              {{ pack.name }} <div class="black">{{ pack.black }}</div>
+              <div class="white">{{ pack.white }}</div>
+            </li>
+          </ng-template>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <form #newGameForm="ngForm" autocomplete="off">
+      <p>
+        Choose how many wins it will take before people discover your brilliance.
+      </p>
+      <p class="sm">
+        I think it will take <input required #maxScore="ngModel" [(ngModel)]="newGame._maxScore" name="maxScore" id="max-score" type="number"
+        min="3" max="100" value="8" pattern="^[^0][\d]{0,2}$" autocomplete="off" /> wins for my victory.
+      </p>
+      </form>
+    </section>
+
+    <section>
+      <p>
+        👋, {{ username }}. Don't forget to share this link otherwise you'll be pretty lonely.
+      </p>
+      <p>
+        <span class="link" (click)="copyUrl()">{{ joinGameURL }}</span>
+      </p>
+    </section>
+
+  <div class="btn-container">
+    <button [disabled]="newGameForm.form.invalid || !isJoinGameURLCopied" (click)="startGame()" class="start-game">
+      <div class="notice">Click to copy the URL so others can join your game.</div>
+      Create a new game <fa-icon class="continue" [icon]="['fas', 'arrow-right']" size="sm"></fa-icon>
+    </button>
+  </div>
 
 </main>

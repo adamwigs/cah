@@ -31,7 +31,7 @@ export class CreateGameComponent implements OnInit, DoCheck {
   black = 0;
   white = 0;
   packs: Pack[] = [];
-  newGame = new NewGame(this._tokenService.get(), (Math.random() * 1E17).toString(36), 8, 10, 0, [], '', 5);
+  newGame = new NewGame(this._tokenService.get(), (Math.random() * 1E17).toString(36), 8, 20, 0, [], '', 5);
 
   username: string;
   joinGameURL: string;
@@ -134,10 +134,6 @@ export class CreateGameComponent implements OnInit, DoCheck {
   }
 
   startGame() {
-    this.isGameCreated = true;
-  }
-
-  reallyStartGame() {
 
     if (this.newGame.maxScore * this.newGame.maxPlayers >= this.black) {
       this._toastService.emit(new Toast(`Not enough black cards selected. ${this.newGame.maxScore * this.newGame.maxPlayers} required for this configuration.`));
