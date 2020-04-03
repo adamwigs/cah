@@ -45,7 +45,7 @@ export class GameComponent implements OnInit, OnDestroy {
       this.game = game;
 
       if (this.game.players.length < 3) {
-        this.message = 'Waiting for players';
+        this.message = 'Wow, it\'s lonely here. We need more players.';
         this.done = true;
       } else if (game.czar === this._token.get()) {
         // It's your turn to use your divine judgement.
