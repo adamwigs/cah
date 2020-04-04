@@ -133,6 +133,12 @@ export class CreateGameComponent implements OnInit, DoCheck {
 
   }
 
+  selectedPacks() {
+    return this.packs.filter((pack: Pack) => {
+      return pack.selected;
+    });
+  }
+
   startGame() {
 
     if (this.newGame.maxScore * this.newGame.maxPlayers >= this.black) {

@@ -96,6 +96,7 @@ main {
       // text-transform: capitalize;
       white-space: initial;
       position: relative;
+      user-select: none;
 
       &>small {
         font-size: 8pt;

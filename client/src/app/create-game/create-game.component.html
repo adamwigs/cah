@@ -7,7 +7,8 @@
     <ul>
       <ng-template [ngIf]="true" *ngFor="let pack of packs">
         <li (click)="togglePack(pack)" [class.hidden]="pack.hidden" [class.selected]="pack.selected" *ngIf="!pack.hidden">
-          {{ pack.name }} <div class="black">{{ pack.black }}</div>
+          {{ pack.name }} 
+          <div class="black">{{ pack.black }}</div>
           <div class="white">{{ pack.white }}</div>
         </li>
       </ng-template>
@@ -75,17 +76,26 @@
         Pick some card packs that might make you laugh.
       </p>
       <div>
-        <input (keyup)="filter()" [(ngModel)]="query" type="text" class="search" placeholder="Filter..." />
+        <input (keyup)="filter()" [(ngModel)]="query" type="text" class="search" placeholder="Search card packs..." />
 
         <ul>
-          <ng-template [ngIf]="true" *ngFor="let pack of packs">
-            <li (click)="togglePack(pack)" [class.hidden]="pack.hidden" [class.selected]="pack.selected" *ngIf="!pack.hidden">
-              {{ pack.name }} <div class="black">{{ pack.black }}</div>
-              <div class="white">{{ pack.white }}</div>
-            </li>
-          </ng-template>
+          <div class="container">
+            <ng-template [ngIf]="true" *ngFor="let pack of packs">
+              <li (click)="togglePack(pack)" [class.hidden]="pack.hidden" [class.selected]="pack.selected" *ngIf="!pack.hidden">
+                {{ pack.name }} 
+                <!-- <div class="black">{{ pack.black }}</div>
+                <div class="white">{{ pack.white }}</div> -->
+              </li>
+            </ng-template>
+          </div>
         </ul>
       </div>
+      <p class="sm">
+        I want to play with
+        <ng-template [ngIf]="true" *ngFor="let pack of selectedPacks(); last as isLast; first as isFirst">
+          <span *ngIf="isLast && !isFirst">and </span><span class="pack-name" *ngIf="pack.selected">{{ pack.name }}</span><span *ngIf="!isLast">, </span>
+        </ng-template>.
+      </p>
     </section>
 
     <section>

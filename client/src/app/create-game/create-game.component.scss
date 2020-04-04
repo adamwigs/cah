@@ -30,6 +30,10 @@ main {
       }
     }
 
+    .pack-name {
+      border-bottom: 3px solid white;
+    }
+
     .link {
       line-height: 100px;
       border-bottom: 3px solid #fff;
@@ -165,17 +169,41 @@ main {
     padding: 0;
     width: calc(100% - 2px);
     margin: auto;
+    margin-top: 20px;
     border: 1px solid #000;
-    max-height: 200px;
-    overflow-y: auto;
+    overflow: auto;
+    height: 300px;
+    
+    .container {
+      white-space: nowrap;
+      width: max-content;
+    }
 
     li {
       display: block;
-      padding: 0.5em 1em;
+      padding: 0.5em 0.5em;
       cursor: pointer;
       color: #333;
       user-select: none;
       background-color: #fff;
+      float: left;
+      white-space: normal;
+      word-break: break-word;
+      background-color: black;
+      color: white;
+      border: 3px solid white;
+      width: 150px;
+      height: 200px;
+      font-size: 24px;
+      font-weight: 600;
+      margin-right: 20px;
+
+      box-shadow: 1px 1px 0px white,
+                  2px 2px 0px white,
+                  3px 3px 0px white,
+                  4px 4px 0px white,
+                  5px 5px 0px white,
+                  6px 6px 0px white;
 
       div {
         display: inline;
@@ -205,14 +233,12 @@ main {
 
       }
 
-      &:nth-of-type(2n) {
-        background-color: #eee;
-      }
-
       &.selected {
-        font-weight: 600;
-        background-color: #ddd;
-        color: #000;
+        // font-weight: 600;
+        // background-color: white;
+        // color: #000;
+        text-decoration: line-through;
+        text-decoration-thickness: 3px;
       }
 
       &.hidden {

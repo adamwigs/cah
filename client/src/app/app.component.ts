@@ -60,6 +60,16 @@ export class AppComponent implements OnInit, DoCheck {
       this.toast.show();
     });
 
+    this._socket.on('reconnect', () => {
+      this.toast.setMsg('Reconnected to game server.');
+      this.toast.show();
+    });
+
+    this._socket.on('reconnect_failed', () => {
+      this.toast.setMsg('Failed to reconnect to game server.');
+      this.toast.show();
+    });
+
     this._socket.on('redirect', (data: string[]) => {
       this._router.navigate(data);
     });
