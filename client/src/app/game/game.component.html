@@ -19,7 +19,7 @@
       </ng-template>
 
       <ng-template [ngIf]="game.playedCards.length !== game.players.length - 1">
-        <div class="collection">
+        <div *ngIf="game.picks.length > 0" class="collection">
           <div *ngFor="let c of game.picks" class="card">
             {{ c.text }}
             <small>{{ c.pack }}</small>
