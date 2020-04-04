@@ -5,7 +5,7 @@ main {
 
   .card-row {
     width: 100%;
-    height: 250px;
+    height: 260px;
     overflow-x: auto;
     // margin-bottom: 30px;
     white-space: nowrap;
@@ -13,6 +13,7 @@ main {
     .played-cards {
 
       overflow-y: hidden;
+      padding-top: 10px;
 
       .collection {
         display: inline-block;
@@ -24,22 +25,26 @@ main {
         width: calc(147px + 24px + 3px);
 
         &:hover > .card, &.selected>.card {
-          transform: translateY(-5px);
+          // transform: translateY(-10px);
+          background: linear-gradient(150deg, rgba(255,255,255,1) 0%, rgba(205,205,205,1) 100%);
         }
 
         &.winner>.card {
           background-color: #94d82d;
+          background-image: none;
         }
 
         .card {
-          transition: margin .2s ease-in-out, background-color 0.1s ease-in-out;
-          text-transform: capitalize;
+          transition: margin .2s ease-in-out, background-color 0.1s ease-in-out, transform 0.2s ease-in-out;
+          
+          // text-transform: capitalize;
           // background-color: #fff;
           &>small {
             font-size: 8pt;
             display: block;
             margin-top: .5em;
           }
+
         }
 
         .card:nth-child(1):hover {
@@ -109,7 +114,7 @@ main {
         width: 400px;
         font-size: 32px;
         font-weight: 650;
-        padding-top: 0px;
+        padding-top: 5px;
       }
 
       &:not(.black) {
@@ -118,7 +123,6 @@ main {
       }
 
       &:not(.black):hover, &.selected {
-        transform: translateY(-10px);
         background: linear-gradient(150deg, rgba(255,255,255,1) 0%, rgba(205,205,205,1) 100%);
       }
 
@@ -141,6 +145,10 @@ main {
       margin-bottom: 0;
       float: none;
       margin-bottom: 5px;
+    }
+
+    &.my-cards>.card:not(.black):hover, &.my-cards>.card.selected {
+      transform: translateY(-10px);
     }
 
     &.my-cards>h1 {
@@ -180,6 +188,7 @@ main {
     div.player {
       display: inline-block;
       text-align: center;
+      min-width: 80px;
 
       span {
         margin: 0 .5em;
@@ -228,6 +237,15 @@ main {
         &.name {
           font-size: 13px;
           font-weight: 600;
+          margin-top: 5px;
+          display: inline-block;
+        }
+
+        &.czar {
+          color: white;
+          background-color: black;
+          border-radius: 4px;
+          border: 2px solid white;
         }
 
       }

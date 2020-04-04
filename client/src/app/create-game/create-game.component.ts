@@ -59,7 +59,7 @@ export class CreateGameComponent implements OnInit, DoCheck {
         });
 
         this.packs.forEach(p => {
-          p.selected = p.name.startsWith("CAH") && !p.name.includes("UK") && !p.name.includes("Mars") && !p.name.includes("Red") && !p.name.includes("Blue");
+          p.selected = p.name == "Cards Against Humanity" || p.name == "Cards Against Robots";
         });
       }
     });

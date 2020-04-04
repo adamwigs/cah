@@ -46,7 +46,7 @@
         <span class="score">{{ p.score }}</span>
         {{ p.emoji }}
       </span>
-      <span [class.me]="p.id === pid" class="name">
+      <span [class.me]="p.id === pid" class="name" [class.czar]="p.id === game.czar && p.score !== game.settings.maxScore">
         <fa-icon *ngIf="p.done" [icon]="['fas', 'check-circle']" size="small"></fa-icon> {{ p.username }}
       </span>
       <!-- <span class="score">{{ p.score }}</span>
