@@ -16,7 +16,7 @@ export class UsernameService {
 
   set(username: string) {
 
-    sessionStorage.setItem('username', username);
+    localStorage.setItem('username', username);
     this._socketService.setUserIdentity(username, this.getEmoji());
 
     // Easter eggs
@@ -33,17 +33,17 @@ export class UsernameService {
 
   get() {
 
-    return sessionStorage.getItem('username') || '';
+    return localStorage.getItem('username') || '';
 
   }
 
   setEmoji(emoji: string) {
-    sessionStorage.setItem('emoji', emoji);
+    localStorage.setItem('emoji', emoji);
     this._socketService.setUserIdentity(this.get(), emoji);
   }
 
   getEmoji() {
-    return sessionStorage.getItem('emoji') || '🤪';
+    return localStorage.getItem('emoji') || '🤪';
   }
 
 }
