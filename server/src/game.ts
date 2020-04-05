@@ -152,6 +152,12 @@ class Game {
                 // of picks will be greater than the number of players? Also if someone *didn't*
                 // pick, then the picks will be revealed but it won't be correct.
 
+                // If this player has a completed pick, then we need to remove it
+                // from that list.
+                this._playedCards = this._playedCards.filter((playedCard: PlayedCards) => {
+                    return playedCard.pid !== player.id;
+                });
+
                 this._players[player.id].leaveGame();
                 delete this._players[player.id];
                 this.sendState('all');
