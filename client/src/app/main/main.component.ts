@@ -18,6 +18,7 @@ export class MainComponent implements OnInit {
 
   isEmojiPickerVisible = false;
   isInActionSelectionMode = false;
+  isInMeddleWithGameMode = false;
 
   joinGame = new JoinGame(this._token.get(), '', '');
   pathIsJoin = false;
@@ -44,6 +45,10 @@ export class MainComponent implements OnInit {
   }
 
   toggleEmojiPicker() {
+    if (this.isInMeddleWithGameMode) {
+      return;
+    }
+
     if (this.isEmojiPickerVisible) {
       this.isEmojiPickerVisible = false;
     } else{
@@ -65,20 +70,14 @@ export class MainComponent implements OnInit {
 
   getStarted() {
     this.isInActionSelectionMode = true;
+    this.isInMeddleWithGameMode = false;
     this.isEmojiPickerVisible = false;
+  }
 
-    // var scrollToService = this._scrollToService;
-
-    // setTimeout(function() {
-    //   const config: ScrollToConfigOptions = {
-    //     target: 'cards',
-    //     duration: 500,
-    //     easing: 'easeInOutCubic',
-    //     offset: 20
-    //   };
-    
-    //   scrollToService.scrollTo(config);
-    // }, 100);
+  meddleWithGame() {
+    this.isInActionSelectionMode = false;
+    this.isInMeddleWithGameMode = true;
+    this.isEmojiPickerVisible = false;
   }
 
   join() {

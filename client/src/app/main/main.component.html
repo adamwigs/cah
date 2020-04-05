@@ -1,4 +1,4 @@
-<main [class.step2]="isInActionSelectionMode">
+<main [class.step2]="isInActionSelectionMode || isInMeddleWithGameMode">
 
   <form #joinGameForm="ngForm" autocomplete="off" class="hero">
 
@@ -8,25 +8,37 @@
       [style]="{ position: 'absolute', bottom: '20px', right: '20px' }"
     ></emoji-mart> -->
 
-    <p>
-      <span [class.dimmed]="isInActionSelectionMode">
-      Hello. My name is <span class="username" contenteditable="true" name="username" (keyup)="setUsername()" [class.empty]="username.length == 0" [(ngModel)]="username"></span> and my favorite emoji is <span class="emoji-container"><span class="emoji" (click)="toggleEmojiPicker()">{{ currentEmoji }}</span>.<emoji-mart 
-      *ngIf="isEmojiPickerVisible"
-      [style]="{ position: 'absolute', bottom: '0px', right: '0px' }"
-      title="" emoji="point_up" darkMode="true"
-      (emojiClick)="setEmoji($event)"
-    ></emoji-mart></span></span><span *ngIf="isInActionSelectionMode"> I want to <span class="underline">&nbsp;</span>.</span>
-    </p>
-
-    <div *ngIf="isInActionSelectionMode" ngInit="scrollCardsIntoView()" class="cards" id="cards">
-      <div class="card" routerLink="/create">
-        Create a new game.
+    <!-- <ng-container *ngIf="!isInMeddleWithGameMode"> -->
+      <p>
+        <span [class.dimmed]="isInActionSelectionMode || isInMeddleWithGameMode">
+        Hello. My name is <span class="username" contenteditable="true" name="username" (keyup)="setUsername()" [class.empty]="username.length == 0" [(ngModel)]="username"></span> and my favorite emoji is <span class="emoji-container"><span class="emoji" (click)="toggleEmojiPicker()">{{ currentEmoji }}</span>.<emoji-mart 
+        *ngIf="isEmojiPickerVisible"
+        [style]="{ position: 'absolute', bottom: '0px', right: '0px' }"
+        title="" emoji="point_up" darkMode="true"
+        (emojiClick)="setEmoji($event)"
+      ></emoji-mart></span></span><span *ngIf="isInActionSelectionMode"> I want to <span class="underline">&nbsp;</span>.</span><span *ngIf="isInMeddleWithGameMode"> I want to meddle with someone else's game.</span>
+      </p>
+  
+      <div *ngIf="isInActionSelectionMode" ngInit="scrollCardsIntoView()" class="cards" id="cards">
+        <div class="card" routerLink="/create">
+          Create a new game.
+        </div>
+  
+        <div class="card" (click)="meddleWithGame()">
+          Meddle with someone else's game.
+        </div>
       </div>
 
-      <div class="card">
-        Meddle with someone else's game.
-      </div>
-    </div>
+      <p class="sm" *ngIf="isInMeddleWithGameMode">
+        I have finagled their game identifier, it is <span class="game-id" contenteditable="true" name="game-id" (keyup)="setUsername()" [class.empty]="joinGame.gid.length == 0" [(ngModel)]="joinGame.gid"></span>.
+      </p>
+    <!-- </ng-container> -->
+<!-- 
+    <ng-container *ngIf="isInMeddleWithGameMode">
+      <p>
+        Ok, {{ username }}. Ask your friend for their game identifier. My name is <span class="username" contenteditable="true" name="username" (keyup)="setUsername()" [class.empty]="username.length == 0" [(ngModel)]="username"></span>
+      </p>
+    </ng-container> -->
 
     <!-- <div class="fw">
       <div class="emoji"><span class="emoji-container" (click)="toggleEmojiPicker()">{{ currentEmoji }}</span><emoji-mart 
@@ -65,8 +77,14 @@
       Let's get started <fa-icon class="continue" [icon]="['fas', 'arrow-right']" size="sm"></fa-icon>
     </button>
 
-    <button *ngIf="!pathIsJoin && !isInActionSelectionMode" [disabled]="!username || joinGameForm.invalid" class="create" (click)="getStarted()">
+    <button *ngIf="!pathIsJoin && !isInActionSelectionMode && !isInMeddleWithGameMode" [disabled]="!username || joinGameForm.invalid" class="create" (click)="getStarted()">
       <div class="notice">A username is required to create and join games.</div>
+      Let's get started <fa-icon class="continue" [icon]="['fas', 'arrow-right']" size="sm"></fa-icon>
+    </button>
+
+    <button *ngIf="!pathIsJoin && !isInActionSelectionMode && isInMeddleWithGameMode" [disabled]="!username || joinGameForm.invalid || joinGame.gid.length == 0" class="create" (click)="join()">
+      <div class="notice" *ngIf="username.length == 0">A username is required to create and join games.</div>
+      <div class="notice" *ngIf="username.length > 0">A valid game identifier is required to join games.</div>
       Let's get started <fa-icon class="continue" [icon]="['fas', 'arrow-right']" size="sm"></fa-icon>
     </button>
   </div>
