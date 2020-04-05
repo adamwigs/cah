@@ -1,4 +1,4 @@
-import { Player, Players } from './player';
+import { Player, Players, DisconnectedPlayers, DisconnectedPlayerInfo } from './player';
 import { Client, QueryResult } from 'pg';
 import * as log from 'solid-log';
 import { dbConf } from './config';
@@ -19,7 +19,10 @@ class Game {
 
     public created = new Date().getTime();
     public hid = this._host.id;
+
     private _players: Players = {};
+    private _disconnectedPlayers: DisconnectedPlayers = {};
+
     private _bIndex = 0;
     private _blackCards: BlackCard[] = [];
     private _whiteCards: WhiteCard[] = [];
@@ -113,15 +116,42 @@ class Game {
             if (!this.players.check(player.id)) {
                 this._players[player.id] = player;
                 this._players[player.id].inGame = true;
-                for (let i = 0; i < 10; i++) {
-                    player.hand.push(this.randomWhiteCard());
+
+                if (this._disconnectedPlayers.hasOwnProperty(player.id)) {
+                    // A player which was disconnected and wants to rejoin. In this
+                    // case we need should restore their score and hand.
+                    player.score = this._disconnectedPlayers[player.id].score;
+                    player.blanksPlayed = this._disconnectedPlayers[player.id].blanksPlayed;
+                    player.hand = [...this._disconnectedPlayers[player.id].hand];
+
+                    delete this._disconnectedPlayers[player.id];
+                } else {
+                    // A new player that hasn't been in the game before. Give them
+                    // a new random hand.
+                    for (let i = 0; i < 10; i++) {
+                        player.hand.push(this.randomWhiteCard());
+                    }
                 }
+
                 this.sendState('all');
             }
         },
         remove: (player: Player) => {
             // TODO: What happens when the czar leaves? Nothing? The game just pauses?
             if (this.players.check(player.id)) {
+                // Save off a copy of their state in the disconnect player list in case
+                // they rejoin at a later date.
+                let disconnectedPlayerInfo = new DisconnectedPlayerInfo();
+                disconnectedPlayerInfo.score = player.score;
+                disconnectedPlayerInfo.blanksPlayed = player.blanksPlayed;
+                disconnectedPlayerInfo.hand = [...player.hand];
+                this._disconnectedPlayers[player.id] = disconnectedPlayerInfo;
+
+                // TODO: Should we remove their picks?
+                // TODO: What if someone has a pick already and then leaves the game; the number
+                // of picks will be greater than the number of players? Also if someone *didn't*
+                // pick, then the picks will be revealed but it won't be correct.
+
                 this._players[player.id].leaveGame();
                 delete this._players[player.id];
                 this.sendState('all');

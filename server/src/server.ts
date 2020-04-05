@@ -177,7 +177,7 @@ io.on('connection', socket => {
 
         if (players[data.pid].inGame) {
             socket.emit('error-message', {
-                message: 'Player is already joined in this game.'
+                message: 'Player is already joined in a game.'
             });
             return;
         }

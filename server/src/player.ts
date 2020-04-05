@@ -4,6 +4,21 @@ interface Players {
     [playerId: string]: Player;
 }
 
+interface DisconnectedPlayers {
+    [playerId: string]: DisconnectedPlayerInfo;
+}
+
+/// A class for players which might temporarily disconnect from a game but
+/// rejoin at a later time. This preserves their score and hand they played.
+class DisconnectedPlayerInfo {
+
+    public score = 0;
+    public blanksPlayed = 0;
+    public hand: WhiteCard[] = [];
+    public picks: WhiteCard[] = []; 
+
+}
+
 class Player {
 
     public username = '';
@@ -36,5 +51,7 @@ class Player {
 
 export {
     Player,
-    Players
+    DisconnectedPlayerInfo,
+    Players,
+    DisconnectedPlayers
 };
