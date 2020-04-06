@@ -61,6 +61,7 @@ export class InfoComponent implements OnInit {
   // };
 
   constructor(private _socket: Socket) {
+    this._socket.removeListener('info')
     this._socket.on('info', (info: IInfo) => {
       this.info = info;
     });

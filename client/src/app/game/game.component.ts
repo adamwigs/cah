@@ -44,6 +44,7 @@ export class GameComponent implements OnInit, OnDestroy {
     private _usernameService: UsernameService
   ) {
 
+    this._socket.removeListener('game');
     this._socket.on('game', (game: ISocket.GameState.State) => {
       this.game = game;
 
@@ -78,6 +79,7 @@ export class GameComponent implements OnInit, OnDestroy {
 
     });
 
+    this._socket.removeListener('round-winner');
     this._socket.on('round-winner', (winner: { pid: string, score: number }) => {
 
       for (const p of this.game.players) {
@@ -97,6 +99,7 @@ export class GameComponent implements OnInit, OnDestroy {
 
     });
 
+    this._socket.removeListener('reconnect');
     this._socket.on('reconnect', () => {
       this._toastService.emit(new Toast('Reconnected to game server.', 3000));
 

@@ -47,6 +47,7 @@ export class CreateGameComponent implements OnInit, DoCheck {
     private _router: Router
   ) {
 
+    this._socket.removeListener('get-packs-list')
     this._socket.on('get-packs-list', (data: PackList) => {
       for (const d of data) {
         this.packs.push({
