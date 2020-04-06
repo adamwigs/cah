@@ -97,7 +97,17 @@ export class GameComponent implements OnInit, OnDestroy {
 
     });
 
-    this._socket.on('reconnect', this.handleReconnectEvent);
+    this._socket.on('reconnect', () => {
+      this._toastService.emit(new Toast('Reconnected to game server.', 3000));
+
+      // Re-auth with the game server and attempt to re-join the game.
+      this._socket.emit('reconnect-game', new ReconnectGame(
+        this._token.get(),
+        this.gid,
+        this._usernameService.get(),
+        this._usernameService.getEmoji()
+      ));
+    });
 
   }
 
@@ -116,7 +126,9 @@ export class GameComponent implements OnInit, OnDestroy {
 
     const gr = new GameRequest(this._token.get(), this.gid);
     this._socket.emit('leave-game', gr);
-    this._socket.removeListener('reconnect', this.handleReconnectEvent)
+
+    // TODO: Investigate how to properly remove listener.
+    // this._socket.removeListener('reconnect', this.handleReconnectEvent)
 
   }
 
@@ -162,18 +174,6 @@ export class GameComponent implements OnInit, OnDestroy {
     const gr = new GameRequest(this._token.get(), this.gid);
     this._socket.emit('game', gr);
     this._toastService.emit(new Toast('Game synced.', 3000));
-  }
-
-  handleReconnectEvent(attemptNumber: Number) {
-    this._toastService.emit(new Toast('Reconnected to game server after ' + attemptNumber + ' attempts.', 3000));
-
-    // Re-auth with the game server and attempt to re-join the game.
-    this._socket.emit('reconnect-game', new ReconnectGame(
-      this._token.get(),
-      this.gid,
-      this._usernameService.get(),
-      this._usernameService.getEmoji()
-    ));
   }
 
   playBlank(text: string) {
