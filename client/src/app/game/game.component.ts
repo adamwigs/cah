@@ -9,6 +9,8 @@ import { Winner } from '@class/winner';
 import { PickedWhite } from '@class/picked-white';
 import { BlankCard } from '@class/blank-card';
 import { SettingsService } from '@service/settings.service';
+import { ReconnectGame } from '@class/reconnect-game';
+import { UsernameService } from '@service/username.service';
 
 @Component({
   selector: 'app-game',
@@ -38,7 +40,8 @@ export class GameComponent implements OnInit, OnDestroy {
     private _socket: Socket,
     private _token: TokenService,
     private _toastService: ToastService,
-    private _settingsService: SettingsService
+    private _settingsService: SettingsService,
+    private _usernameService: UsernameService
   ) {
 
     this._socket.on('game', (game: ISocket.GameState.State) => {
@@ -94,6 +97,8 @@ export class GameComponent implements OnInit, OnDestroy {
 
     });
 
+    this._socket.on('reconnect', this.handleReconnectEvent);
+
   }
 
   ngOnInit() {
@@ -111,6 +116,7 @@ export class GameComponent implements OnInit, OnDestroy {
 
     const gr = new GameRequest(this._token.get(), this.gid);
     this._socket.emit('leave-game', gr);
+    this._socket.removeListener('reconnect', this.handleReconnectEvent)
 
   }
 
@@ -156,6 +162,18 @@ export class GameComponent implements OnInit, OnDestroy {
     const gr = new GameRequest(this._token.get(), this.gid);
     this._socket.emit('game', gr);
     this._toastService.emit(new Toast('Game synced.', 3000));
+  }
+
+  handleReconnectEvent(attemptNumber: Number) {
+    this._toastService.emit(new Toast('Reconnected to game server after ' + attemptNumber + ' attempts.', 3000));
+
+    // Re-auth with the game server and attempt to re-join the game.
+    this._socket.emit('reconnect-game', new ReconnectGame(
+      this._token.get(),
+      this.gid,
+      this._usernameService.get(),
+      this._usernameService.getEmoji()
+    ));
   }
 
   playBlank(text: string) {

@@ -43,6 +43,51 @@ io.on('connection', socket => {
 
     });
 
+    socket.on('reconnect-game', (data: Socket.ReconnectGame) => {
+
+        const { pid, gid, username, emoji } = data;
+        
+        // Login the user if they weren't in the global list of players.
+        if (players[pid]) {
+            players[pid].socket = socket;
+        } else {
+            players[String(pid)] = new Player(pid, socket);
+        }
+
+        // Set their user identity.
+        players[pid].username = username;
+        players[pid].emoji = emoji;
+
+        if (!games[gid]) {
+            socket.emit('error-message', {
+                message: 'Game with identifier not found.'
+            });
+            return;
+        }
+
+        if (players[data.pid].inGame) {
+            // Player is already joined in a game. Bail out early.
+            return;
+        }
+
+        if (games[data.gid].players.amount() >= games[data.gid].maxPlayers) {
+            socket.emit('error-message', {
+                message: 'Game is already at the max players.'
+            });
+            return;
+        }
+
+        if (players[pid].username.length == 0) {
+            socket.emit('error-message', {
+                message: 'User identity not found.'
+            });
+            return;
+        }
+
+        games[gid].players.add(players[pid]);
+
+    });
+
     socket.on('username', (data: Socket.UsernameUpdate) => {
 
         const { pid, username, emoji } = data;

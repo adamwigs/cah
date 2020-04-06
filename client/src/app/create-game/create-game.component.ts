@@ -76,6 +76,10 @@ export class CreateGameComponent implements OnInit, DoCheck {
     }
   }
 
+  ngOnDestroy() {
+    this._socket.removeListener('get-packs-list')
+  }
+
   ngDoCheck() {
 
     this.black = 0;

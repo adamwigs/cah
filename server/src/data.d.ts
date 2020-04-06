@@ -58,6 +58,13 @@ declare namespace Socket {
         hid: string;
     }
 
+    interface ReconnectGame extends GameRequest {
+        pid: string,
+        gid: string,
+        username: string,
+        emoji: string
+    }
+
     interface JoinGameRequest extends GameRequest {
         password: string;
     }
