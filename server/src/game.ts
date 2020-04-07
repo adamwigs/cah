@@ -138,6 +138,7 @@ class Game {
         },
         remove: (player: Player) => {
             // TODO: What happens when the czar leaves? Nothing? The game just pauses?
+            // RAW: Maybe we end the round because we have to pick a new czar.
             if (this.players.check(player.id)) {
                 // Save off a copy of their state in the disconnect player list in case
                 // they rejoin at a later date.

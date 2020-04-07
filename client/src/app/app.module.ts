@@ -26,6 +26,7 @@ import { ClipboardModule } from 'ngx-clipboard';
 import { FAModule } from './fa/fa.module';
 import { PickerModule } from '@ctrl/ngx-emoji-mart';
 import { ScrollToModule } from '@nicky-lenaers/ngx-scroll-to';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 // Other imports
 import { SocketIoModule } from 'ngx-socket-io';
@@ -43,7 +44,8 @@ import { BlankCardModalComponent } from './blank-card-modal/blank-card-modal.com
     ClipboardModule,
     FAModule,
     PickerModule,
-    ScrollToModule.forRoot()
+    ScrollToModule.forRoot(),
+    DragDropModule
   ],
   declarations: [
     AppComponent,

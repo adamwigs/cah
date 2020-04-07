@@ -11,6 +11,7 @@ import { BlankCard } from '@class/blank-card';
 import { SettingsService } from '@service/settings.service';
 import { ReconnectGame } from '@class/reconnect-game';
 import { UsernameService } from '@service/username.service';
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-game',
@@ -135,6 +136,24 @@ export class GameComponent implements OnInit, OnDestroy {
 
   }
 
+  drop($event: CdkDragDrop<WhiteCard>) {
+    if (this.game.czar === this.pid) {
+      // Czar does not get to drag and drop any cards this round.
+      // return;
+    }
+
+    if ($event.container === $event.previousContainer) {
+      return;
+    }
+
+    const white = new PickedWhite(this._token.get(), this.gid, $event.item.data);
+    this._socket.emit('pick-white', white);
+    this.selectWhite = null;
+
+    // TODO: Maybe we should have some loading animation until we hear back
+    // from the server; in case there is some delay?
+  }
+
   confirm() {
 
     if (this.game.czar === this.pid) {
@@ -167,8 +186,8 @@ export class GameComponent implements OnInit, OnDestroy {
   }
 
   selectWinner(winner: PlayedCards) {
-    this.done = false;
     if (this.game.czar === this._token.get()) {
+      this.done = false;
       this.winnerCard = winner;
     }
   }

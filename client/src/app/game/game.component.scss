@@ -1,3 +1,64 @@
+.card {
+  // font-family: sans-serif;
+  padding: 12px;
+  border-radius: 6px;
+  width: 147px;
+  height: 215px;
+  font-size: 13.5pt;
+  font-weight: bold;
+  background-color: white;
+  color: black;
+  background: linear-gradient(150deg, rgba(255,255,255,1) 0%, rgba(225,225,225,1) 100%);
+  border: 1px solid black;
+  margin-right: 1px;
+  // margin-bottom: 20px;
+  float: left;
+  display: block;
+  // text-transform: capitalize;
+  white-space: initial;
+  position: relative;
+  user-select: none;
+
+  &>small {
+    font-size: 8pt;
+    display: block;
+    margin-top: .5em;
+    bottom: 15px;
+    position: absolute;
+  }
+
+  &.black {
+    display: block;
+    background: none;
+    background-color: black;
+    color: white;
+    float: left;
+    width: 400px;
+    font-size: 32px;
+    font-weight: 650;
+    padding-top: 5px;
+  }
+
+  &:not(.black) {
+    cursor: pointer;
+    transition: background-color 0.1s ease-in-out, transform 0.2s ease-in-out;
+
+    &.cdk-drag-dragging, &.cdk-drag-preview {
+      transition: none;
+      box-sizing: border-box;
+    }
+  }
+
+  &:not(.black):hover, &.selected {
+    background: linear-gradient(150deg, rgba(255,255,255,1) 0%, rgba(205,205,205,1) 100%);
+  }
+
+  &:last-of-type {
+    margin-right: 0;
+  }
+
+}
+
 main {
 
   padding: 20px;
@@ -15,12 +76,18 @@ main {
       overflow-y: hidden;
       padding-top: 10px;
 
-      .collection {
-        display: block;
-        vertical-align: middle;
+      &>.card {
+        display: inline-block;
+        float: none;
+        vertical-align: top;
+      }
+
+      &>.collection {
+        display: inline-block;
+        vertical-align: top;
         white-space: initial;
         margin-bottom: 0;
-        float: left;
+        float: none;
         height: 250px;
         width: calc(147px + 24px + 3px);
 
@@ -77,60 +144,66 @@ main {
 
     }
 
-    .card {
-      // font-family: sans-serif;
-      padding: 12px;
-      border-radius: 6px;
-      width: 147px;
-      height: 215px;
-      font-size: 13.5pt;
-      font-weight: bold;
-      background-color: white;
-      color: black;
-      background: linear-gradient(150deg, rgba(255,255,255,1) 0%, rgba(225,225,225,1) 100%);
-      border: 1px solid black;
-      margin-right: 1px;
-      // margin-bottom: 20px;
+    .drag-destination-container {
+      padding-top: 10px;
       float: left;
-      display: block;
-      // text-transform: capitalize;
-      white-space: initial;
-      position: relative;
-      user-select: none;
 
-      &>small {
-        font-size: 8pt;
-        display: block;
-        margin-top: .5em;
-        bottom: 15px;
-        position: absolute;
-      }
-
-      &.black {
-        display: block;
-        background: none;
-        background-color: black;
-        color: white;
+      .drag-destination {
+        border-radius: 6px;
+        width: calc(147px + 24px);
+        height: calc(215px + 24px);
+        padding: 12px;
+        margin-right: 3px;
+        box-sizing: border-box;
+  
+        border: 2px dashed #444;
+  
         float: left;
-        width: 400px;
-        font-size: 32px;
-        font-weight: 650;
-        padding-top: 5px;
-      }
+        display: block;
+        white-space: initial;
+        position: relative;
 
-      &:not(.black) {
-        cursor: pointer;
-        transition: background-color 0.1s ease-in-out, transform 0.2s ease-in-out;
-      }
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
 
-      &:not(.black):hover, &.selected {
-        background: linear-gradient(150deg, rgba(255,255,255,1) 0%, rgba(205,205,205,1) 100%);
-      }
+        &>p {
+          text-align: center;
+          font-weight: 600;
+          color: #444;
+        }
 
-      &:last-of-type {
-        margin-right: 0;
-      }
+        &>.cdk-drag-placeholder {
+          position: absolute;
+          z-index: 10;
 
+          text-align: left;
+
+          width: calc(147px + 24px);
+          height: calc(215px + 24px);
+          border: 2px dashed #444;
+          box-sizing: border-box;
+
+          background-image: none;
+          background-color: black;
+          color: #444;
+        }
+
+        .pick-count {
+          display: inline-block;
+          width: 22px;
+          height: 22px;
+          background-color: #444;
+          color: black;
+          border-radius: 25px;
+          box-sizing: border-box;
+          padding: 2px;
+          margin-left: 1px;
+          margin-right: 1px;
+          text-align: center;
+        }
+      }
     }
 
     &.my-cards {

@@ -7,6 +7,14 @@
       <!-- <small>{{ game.black.pack }}</small> -->
     </div>
 
+    <div [hidden]="pid === game.czar || done" class="drag-destination-container">
+      <div #dragDestinationRef="cdkDropList" class="drag-destination" cdkDropList (cdkDropListDropped)="drop($event)">
+        <p>
+          Drop <span class="pick-count">{{ game.black.pick - game.picks.length }}</span>&nbsp;<ng-container *ngIf="(game.black.pick - game.picks.length) === 1">card</ng-container><ng-container *ngIf="(game.black.pick - game.picks.length) !== 1">cards</ng-container>
+        </p>
+      </div>
+    </div>
+
     <div (wheel)="scrollX($event, 'playedCardsRef')" #playedCardsRef class="played-cards">
 
       <ng-template [ngIf]="game.playedCards.length === game.players.length - 1">
@@ -58,9 +66,10 @@
 
   </div>
 
-  <div (wheel)="scrollX($event, 'myCardsRef')" #myCardsRef class="card-row my-cards">
+  <div (wheel)="scrollX($event, 'myCardsRef')" #myCardsRef class="card-row my-cards" cdkDropList (cdkDropListDropped)="drop($event)" [cdkDropListConnectedTo]="[dragDestinationRef]" [cdkDropListDisabled]="pid === game.czar || done">
 
-    <div *ngFor="let card of game.hand" class="card" [class.selected]="selectedWhite && selectedWhite.id === card.id" (click)="selectWhite(card)">
+    <!-- (click)="selectWhite(card)" -->
+    <div *ngFor="let card of game.hand" class="card" [class.selected]="selectedWhite && selectedWhite.id === card.id" [cdkDragData]="card" cdkDrag>
       {{ card.text }}
       <small>{{ card.pack }}</small>
     </div>
