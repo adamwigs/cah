@@ -1,5 +1,60 @@
 <main *ngIf="game">
 
+  <div class="winner-full-screen" *ngIf="isDisplayingRoundWinner">
+    
+    <div class="winner-card winner-black-card bc-{{ game.black.pick }}">
+      {{ game.black.text }}
+      <small>{{ game.black.pack }}</small>
+    </div>
+
+    <ng-container *ngFor="let cards of game.playedCards">
+      <ng-template [ngIf]="cards.winner">
+        <div *ngFor="let c of cards.cards; let i = index" class="winner-card winner-white-card wc-{{ game.black.pick }}-{{ i+1 }}">
+          {{ c.text }}
+          <small>{{ c.pack }}</small>
+        </div>
+      </ng-template>
+    </ng-container>
+
+    <div class="btn-container">
+      <button>
+        <!-- <div class="notice">A username is required to create and join games.</div> -->
+        Let's continue <fa-icon class="continue" [icon]="['fas', 'arrow-right']" size="sm"></fa-icon>
+      </button>
+    </div>
+
+  </div>
+
+  <!-- <div class="winner-full-screen">
+    
+    <div class="winner-card winner-black-card bc-3">
+      Black text. Black text.
+      <small>Cards Against Humanity</small>
+    </div>
+
+    <div class="winner-card winner-white-card wc-3-1">
+      Some clever card that was played.
+      <small>Cards Against Humanity</small>
+    </div>
+
+    <div class="winner-card winner-white-card wc-3-2">
+      Some clever card that was played.
+      <small>Cards Against Humanity</small>
+    </div>
+
+    <div class="winner-card winner-white-card wc-3-3">
+      Some clever card that was played.
+      <small>Cards Against Humanity</small>
+    </div>
+
+    <div class="btn-container">
+      <button>
+        Let's continue <fa-icon class="continue" [icon]="['fas', 'arrow-right']" size="sm"></fa-icon>
+      </button>
+    </div>
+
+  </div> -->
+
   <div class="card-row">
 
     <div class="card black">
@@ -47,12 +102,15 @@
 
   <div class="players">
 
-    <div *ngFor="let p of game.players" class="player">
+    <div *ngFor="let p of game.players" class="player" [class.loser]="isDisplayingRoundWinner && p.id !== winnerIdentifier">
       <!-- <fa-icon *ngIf="p.host" class="host" [icon]="['fas', 'crown']"></fa-icon>
       <fa-icon *ngIf="!p.host" class="user" [icon]="['fas', 'user']"></fa-icon> -->
       <span class="monogram">
         <span class="score">{{ p.score }}</span>
-        {{ p.emoji }}
+        <span class="emoji" [class.popper]="isDisplayingRoundWinner && p.id === winnerIdentifier">
+          <figure>{{ p.emoji }}</figure>
+          <figure>🎉</figure>
+        </span>
       </span>
       <span [class.me]="p.id === pid" class="name" [class.czar]="p.id === game.czar && p.score !== game.settings.maxScore">
         <fa-icon *ngIf="p.done" [icon]="['fas', 'check-circle']" size="small"></fa-icon> {{ p.username }}

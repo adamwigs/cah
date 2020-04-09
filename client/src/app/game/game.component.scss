@@ -64,6 +64,168 @@ main {
   padding: 20px;
   padding-top: 0;
 
+  .winner-full-screen {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    background-color: black;
+    z-index: 100;
+    left: 0;
+    top: 0;
+
+    .winner-message {
+      font-size: 32px;
+    }
+
+    .winner-card {
+
+      font-size: 21px;
+      font-weight: 600;
+      padding: 20px;
+      border-radius: 8px;
+      box-sizing: border-box;
+
+      width: calc(147px * 1.45);
+      height: calc(215px * 1.45);
+
+      position: fixed;
+      top: 50%;
+      left: 50%;
+
+      &>small {
+        font-size: 8pt;
+        display: block;
+        margin-top: .5em;
+        bottom: 20px;
+        position: absolute;
+        width: 100%;
+      }
+
+      @keyframes fade-in {
+        from { opacity: 0.2; }
+        to { opacity: 1; }
+      }
+
+      @keyframes present-winnter-black-card-bc-1 {
+        from { transform: translate3D(calc(147px * 1.45 * -0.5), calc(215px * 1.45 * -0.5), 0) rotateZ(-2deg) translateX(-75px) scale3d(0.5, 0.5, 1.0) }
+        to { transform: translate3D(calc(147px * 1.45 * -0.5), calc(215px * 1.45 * -0.5), 0) rotateZ(-10deg) translateX(-100px) }
+      }
+
+      @keyframes present-winnter-black-card-bc-2 {
+        from { transform: translate3D(calc(147px * 1.45 * -0.5), calc(215px * 1.45 * -0.5), 0) rotateZ(-2deg) translateX(-75px) scale3d(0.5, 0.5, 1.0) }
+        to { transform: translate3D(calc(147px * 1.45 * -0.5), calc(215px * 1.45 * -0.5), 0) rotateZ(-12deg) translateX(-195px) }
+      }
+
+      @keyframes present-winnter-black-card-bc-3 {
+        from { transform: translate3D(calc(147px * 1.45 * -0.5), calc(215px * 1.45 * -0.5), 0) rotateZ(-2deg) translateX(-105px) scale3d(0.5, 0.5, 1.0) }
+        to { transform: translate3D(calc(147px * 1.45 * -0.5), calc(215px * 1.45 * -0.5), 0) rotateZ(-12deg) translateX(-305px) }
+      }
+
+      // WC-1
+
+      @keyframes present-winnter-white-card-wc-1-1 {
+        from { transform: translate3D(calc(147px * 1.45 * -0.5), calc(215px * 1.45 * -0.5), 0) rotateZ(2deg) translateX(75px) scale3d(0.5, 0.5, 1.0) }
+        to { transform: translate3D(calc(147px * 1.45 * -0.5), calc(215px * 1.45 * -0.5), 0) rotateZ(10deg) translateX(100px); }
+      }
+
+      // WC-2
+
+      @keyframes present-winnter-white-card-wc-2-1 {
+        from { transform: translate3D(calc(147px * 1.45 * -0.5), calc(215px * 1.45 * -0.5), 0) rotateZ(0deg) translateY(10px) scale3d(0.5, 0.5, 1.0) }
+        to { transform: translate3D(calc(147px * 1.45 * -0.5), calc(215px * 1.45 * -0.5), 0) rotateZ(0deg) translateY(15px); }
+      }
+
+      @keyframes present-winnter-white-card-wc-2-2 {
+        from { transform: translate3D(calc(147px * 1.45 * -0.5), calc(215px * 1.45 * -0.5), 0) rotateZ(2deg) translateX(75px) scale3d(0.5, 0.5, 1.0) }
+        to { transform: translate3D(calc(147px * 1.45 * -0.5), calc(215px * 1.45 * -0.5), 0) rotateZ(10deg) translateX(195px); }
+      }
+
+      // WC-3
+
+      @keyframes present-winnter-white-card-wc-3-1 {
+        from { transform: translate3D(calc(147px * 1.45 * -0.5), calc(215px * 1.45 * -0.5), 0) rotateZ(0deg) translateY(10px) scale3d(0.5, 0.5, 1.0) }
+        to { transform: translate3D(calc(147px * 1.45 * -0.5), calc(215px * 1.45 * -0.5), 0) rotateZ(-3deg) translateX(-105px) translateY(30px); }
+      }
+
+      @keyframes present-winnter-white-card-wc-3-2 {
+        from { transform: translate3D(calc(147px * 1.45 * -0.5), calc(215px * 1.45 * -0.5), 0) rotateZ(2deg) translateX(75px) scale3d(0.5, 0.5, 1.0) }
+        to { transform: translate3D(calc(147px * 1.45 * -0.5), calc(215px * 1.45 * -0.5), 0) rotateZ(3deg) translateX(105px) translateY(30px); }
+      }
+
+      @keyframes present-winnter-white-card-wc-3-3 {
+        from { transform: translate3D(calc(147px * 1.45 * -0.5), calc(215px * 1.45 * -0.5), 0) rotateZ(2deg) translateX(75px) scale3d(0.5, 0.5, 1.0) }
+        to { transform: translate3D(calc(147px * 1.45 * -0.5), calc(215px * 1.45 * -0.5), 0) rotateZ(12deg) translateX(305px); }
+      }
+
+
+      &.winner-black-card {
+        background-color: #111;
+        color: white;
+
+        &.bc-1 {
+          transform: translate3D(calc(147px * 1.45 * -0.5), calc(215px * 1.45 * -0.5), 0) rotateZ(-10deg) translateX(-100px);
+          animation: present-winnter-black-card-bc-1 1.5s cubic-bezier(0.22, 1, 0.36, 1), fade-in 0.5s;
+        }
+
+        &.bc-2 {
+          transform: translate3D(calc(147px * 1.45 * -0.5), calc(215px * 1.45 * -0.5), 0) rotateZ(-12deg) translateX(-195px);
+          animation: present-winnter-black-card-bc-2 1.5s cubic-bezier(0.22, 1, 0.36, 1), fade-in 0.5s;
+        }
+
+        &.bc-3 {
+          transform: translate3D(calc(147px * 1.45 * -0.5), calc(215px * 1.45 * -0.5), 0) rotateZ(-12deg) translateX(-305px);
+          animation: present-winnter-black-card-bc-3 1.5s cubic-bezier(0.22, 1, 0.36, 1), fade-in 0.5s;
+        }
+
+      }
+
+      &.winner-white-card {
+        background-color: white;
+        background-image: linear-gradient(150deg, rgba(255,255,255,1) 0%, rgba(205,205,205,1) 100%);
+        color: black;
+
+        // WC-1
+
+        &.wc-1-1 {
+          transform: translate3D(calc(147px * 1.45 * -0.5), calc(215px * 1.45 * -0.5), 0) rotateZ(10deg) translateX(100px);
+          animation: present-winnter-white-card-wc-1-1 1.5s cubic-bezier(0.22, 1, 0.36, 1), fade-in 0.5s;
+        }
+
+        // WC-2
+
+        &.wc-2-1 {
+          transform: translate3D(calc(147px * 1.45 * -0.5), calc(215px * 1.45 * -0.5), 0) rotateZ(0deg) translateY(15px);
+          animation: present-winnter-white-card-wc-2-1 1.5s cubic-bezier(0.22, 1, 0.36, 1), fade-in 0.5s;
+        }
+
+        &.wc-2-2 {
+          transform: translate3D(calc(147px * 1.45 * -0.5), calc(215px * 1.45 * -0.5), 0) rotateZ(10deg) translateX(195px);
+          animation: present-winnter-white-card-wc-2-2 1.5s cubic-bezier(0.22, 1, 0.36, 1), fade-in 0.5s;
+        }
+
+        // WC-3
+
+        &.wc-3-1 {
+          transform: translate3D(calc(147px * 1.45 * -0.5), calc(215px * 1.45 * -0.5), 0) rotateZ(-3deg) translateX(-105px) translateY(30px);
+          animation: present-winnter-white-card-wc-3-1 1.5s cubic-bezier(0.22, 1, 0.36, 1), fade-in 0.5s;
+        }
+
+        &.wc-3-2 {
+          transform: translate3D(calc(147px * 1.45 * -0.5), calc(215px * 1.45 * -0.5), 0) rotateZ(3deg) translateX(105px) translateY(30px);
+          animation: present-winnter-white-card-wc-3-2 1.5s cubic-bezier(0.22, 1, 0.36, 1), fade-in 0.5s;
+        }
+
+        &.wc-3-3 {
+          transform: translate3D(calc(147px * 1.45 * -0.5), calc(215px * 1.45 * -0.5), 0) rotateZ(12deg) translateX(305px);
+          animation: present-winnter-white-card-wc-3-3 1.5s cubic-bezier(0.22, 1, 0.36, 1), fade-in 0.5s;
+        }
+
+      }
+
+    }
+
+  }
+
   .card-row {
     width: 100%;
     height: 260px;
@@ -96,10 +258,10 @@ main {
           background: linear-gradient(150deg, rgba(255,255,255,1) 0%, rgba(205,205,205,1) 100%);
         }
 
-        &.winner>.card {
-          background-color: #94d82d;
-          background-image: none;
-        }
+        // &.winner>.card {
+        //   background-color: #94d82d;
+        //   background-image: none;
+        // }
 
         .card {
           transition: margin .2s ease-in-out, background-color 0.1s ease-in-out, transform 0.2s ease-in-out;
@@ -149,7 +311,7 @@ main {
       float: left;
 
       .drag-destination {
-        border-radius: 6px;
+        border-radius: 9px;
         width: calc(147px + 24px);
         height: calc(215px + 24px);
         padding: 12px;
@@ -246,7 +408,7 @@ main {
 
     position: fixed;
     z-index: 2000;
-    top: 22px;
+    top: 18px;
     right: 15px;
 
     text-align: right;
@@ -263,6 +425,12 @@ main {
       display: inline-block;
       text-align: center;
       min-width: 80px;
+
+      transition: opacity 1s ease-in-out;
+
+      &.loser {
+        opacity: 0.25;
+      }
 
       span {
         margin: 0 .5em;
@@ -284,6 +452,25 @@ main {
           text-align: center;
           position: relative;
           margin: 0 auto;
+
+          &>.emoji {
+            margin: 0;
+            display: block;
+            height: 100%;
+            overflow: hidden;
+
+            figure {
+              margin: 0;
+              transition: transform 1s ease-in-out;
+            }
+          }
+
+          &>.popper {
+            figure {
+              transform: translateY(-40px);
+            }
+          }
+
         }
 
         &.score {
@@ -301,6 +488,7 @@ main {
           height: 22px;
           border-radius: 12px;
           box-sizing: border-box;
+          z-index: 1001;
         }
 
         &.me {
@@ -392,6 +580,71 @@ main {
       color: #555;
     }
 
+  }
+
+  .btn-container {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100vw;
+  
+    button {
+      -webkit-box-shadow: inset 0 -4px 0 0 #fff;
+      box-shadow: inset 0 -4px 0 0 #fff;
+      color: black;
+      border: none;
+      border-radius: 0;
+      outline: none;
+      background-color: white;
+      outline: none;
+      cursor: pointer;
+      font-size: 24px;
+      font-weight: bold;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      transition: transform 0.1s ease-in-out, box-shadow 0.1s ease-in-out, padding 0.1s ease-in-out;
+      width: 100vw;
+      height: 80px;
+  
+      .notice {
+        display: none;
+        position: absolute;
+        bottom: 100px;
+        font-size: 14px;
+        padding: 7px;
+        background-color: #fff;
+        color: #000;
+        width: 350px;
+        font-weight: 500;
+        border-radius: 7px;
+        left: 0;
+        right: 0;
+        margin: auto;
+      }
+  
+      &:disabled {
+        &:hover {
+          .notice { display: block; }
+        }
+      }
+
+      &:hover:not(:disabled) {
+        transform: none;
+        box-shadow: none;
+        padding-bottom: 18px;
+      }
+    }
+  
+    .continue {
+      margin-left: 10px;
+      transition: margin 0.2s ease-out;
+    }
+  }
+  
+  .btn-container:hover {
+    .continue {
+      margin-left: 25px;
+    }
   }
 
   div.info {

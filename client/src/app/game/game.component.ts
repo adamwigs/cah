@@ -36,6 +36,9 @@ export class GameComponent implements OnInit, OnDestroy {
   winnerCard: PlayedCards;
   done = true;
 
+  isDisplayingRoundWinner = false;
+  winnerIdentifier: string;
+
   constructor(
     private _route: ActivatedRoute,
     private _socket: Socket,
@@ -48,6 +51,7 @@ export class GameComponent implements OnInit, OnDestroy {
     this._socket.removeListener('game');
     this._socket.on('game', (game: ISocket.GameState.State) => {
       this.game = game;
+      this.isDisplayingRoundWinner = false;
 
       if (this.game.players.length < 3) {
         this.message = 'Wow, it\'s lonely here. We need more players.';
@@ -82,6 +86,9 @@ export class GameComponent implements OnInit, OnDestroy {
 
     this._socket.removeListener('round-winner');
     this._socket.on('round-winner', (winner: { pid: string, score: number }) => {
+
+      this.isDisplayingRoundWinner = true;
+      this.winnerIdentifier = winner.pid;
 
       for (const p of this.game.players) {
         if (p.id === winner.pid) {
