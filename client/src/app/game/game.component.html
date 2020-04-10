@@ -1,6 +1,22 @@
 <main *ngIf="game">
 
-  <div class="winner-full-screen" *ngIf="isDisplayingRoundWinner">
+  <div class="full-screen-takeover center" *ngIf="game.players.length < 3">
+    <section>
+      <div class="avatars">
+        <figure *ngFor="let p of game.players">
+          {{ p.emoji }}
+        </figure>
+      </div>
+      <p *ngIf="game.players.length == 1">
+        Wow it's lonely here. We still need <span class="underline">two</span> more players.
+      </p>
+      <p *ngIf="game.players.length == 2">
+        Wow it's lonely here. We still need <span class="underline">one</span> more player.
+      </p>
+    </section>
+  </div>
+
+  <div class="full-screen-takeover" *ngIf="isDisplayingRoundWinner">
     
     <div class="winner-card winner-black-card bc-{{ game.black.pick }}">
       {{ game.black.text }}
